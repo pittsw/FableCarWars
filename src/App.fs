@@ -45,7 +45,7 @@ let updateSetup msg (players, error) =
 
     match msg with
     | AddPlayer name ->
-        Setup ({ Name = name; Cars = []; Error = "" } :: players |> List.rev, "")
+        Setup ({ Name = name; Cars = []; Error = "" } :: (List.rev players) |> List.rev, "")
     | RemovePlayer name ->
         Setup (players |> List.filter (fun p -> p.Name <> name), "")
     | AddCar (car, player) ->
