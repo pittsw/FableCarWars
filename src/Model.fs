@@ -1,3 +1,5 @@
+/// All of the types that are used in the model part of the game's model/view/update loop.
+
 module CarWars.Model
 
 open System

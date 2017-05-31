@@ -1,3 +1,5 @@
+/// The app's logic. Surprisingly short, compared to the view and model code. Maybe that's my OO background showing.
+
 module CarWars.App
 
 open System

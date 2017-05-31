@@ -1,3 +1,5 @@
+/// View functions. Since this is a client-side framework, these views return new virtual DOMs, which are then applied.
+
 module CarWars.View
 
 open System

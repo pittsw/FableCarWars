@@ -1,3 +1,6 @@
+/// This file contains all of the static data in use by this app. In other projects, this would be a couple of JSON
+/// files.
+
 module CarWars.Data
 
 type SpeedRow = {
