@@ -1,0 +1,18 @@
+.block {
+    border: 2px double lightblue;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
+}
+
+.error {
+    color: red;
+}
+
+.currentPhase {
+    background-color: lightblue;
+}
+
+.shotBreakdown {
+    color: grey;
+}
