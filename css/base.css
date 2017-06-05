@@ -1,3 +1,21 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+button {
+    background-color: lightblue;
+    border-radius: 1em;
+    border: 2px double darkcyan;
+    margin: 4px;
+}
+
+th {
+    background-color: darkcyan;
+    color: white;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+}
+
 .block {
     border: 2px double lightblue;
     border-radius: 1em;
