@@ -225,7 +225,7 @@ let gameView gameState dispatch =
                 yield R.colgroup [] cols
                 yield R.tbody [] [
                     for player in quantum.Players do
-                        yield R.tr [] [R.td [P.ColSpan numCols] [h2 player.Name]]
+                        yield R.tr [] [R.td [P.ColSpan numCols] [h3 <| sprintf "%s's cars" player.Name]]
                         yield R.tr [] [
                             thStr "Car"
                             thStr "Speed"
@@ -445,7 +445,7 @@ let gameView gameState dispatch =
     let rightBar =
         R.div [P.Style [P.Float "left"]] [
             R.div [P.ClassName "block"] [
-                h2 "Speed chart"
+                h2 "Speed Chart"
                 R.table [] [
                     R.colgroup [] [
                         yield R.col []
