@@ -5,13 +5,20 @@
     "command": "dotnet",
     "isShellCommand": true,
     "args": [],
+    "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "fable",
-            "args": ["npm-run", "start"],
+            "taskName": "start",
+            "args": ["fable", "npm-run", "start"],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile",
             "isBackground": true
+        },
+        {
+            "taskName": "build",
+            "args": ["fable", "npm-run", "build"],
+            "problemMatcher": "$msCompile",
+            "isBackground": false
         }
     ]
 }
