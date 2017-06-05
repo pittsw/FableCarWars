@@ -490,4 +490,8 @@ let view model dispatch =
         match model with
         | Setup (players, error) -> setupView players dispatch error
         | ActiveGame gameState -> gameView gameState dispatch
-    R.div [] [R.h1 [] [R.str "Car Wars"]; contents]
+    R.div [] [
+        R.h1 [] [R.str "Car Wars"]
+        contents
+        R.footer [P.ClassName "footer"] [R.str "Contact wipi@robo.church for questions/bug reports"]
+    ]
