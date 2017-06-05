@@ -1,12 +1,20 @@
 body {
+    background: #ebf6f9;
     font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 button {
     background-color: lightblue;
-    border-radius: 1em;
-    border: 2px double darkcyan;
-    margin: 4px;
+    border-radius: 4px;
+    border: 2px solid darkcyan;
+    margin-right: 0.5em;
+}
+
+input, select {
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 th {
@@ -17,8 +25,9 @@ th {
 }
 
 .block {
-    border: 2px double lightblue;
-    border-radius: 1em;
+    background: white;
+    border: 2px solid lightblue;
+    border-radius: 0.5em;
     padding: 1em;
     margin: 1em;
     margin-bottom: 2em;
@@ -30,13 +39,20 @@ th {
     left: 0;
     right: 0;
     background-color: white;
-    border: 2px double lightblue;
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
+    border: 2px solid lightblue;
+    padding: 0.5em;
 }
 
 .error {
     color: red;
+}
+
+.header {
+    background: white;
+    border-bottom: 2px solid lightblue;
+    width: 100%;
+    margin: 0;
+    padding: 0.5em;
 }
 
 .currentPhase {
@@ -45,4 +61,6 @@ th {
 
 .shotBreakdown {
     color: grey;
+    font-style: italic;
+    padding-right: 1em;
 }

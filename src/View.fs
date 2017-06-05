@@ -199,8 +199,9 @@ let gameView gameState dispatch =
     let shotCalculatorResult = ShotCalculatorState.GetValue gameState.ShotCalculator
     let finalToHit =
         shotCalculatorResult.Weapon.ToHit - (List.sumBy (fun (_, modifier) -> modifier) shotCalculatorResult.Modifiers)
-    let leftBar =
-        R.div [P.ClassName "block"; P.Style [P.Float "left"]] [
+    let carsBlock =
+        R.div [P.ClassName "block"] [
+            h2 "Phase Tracker"
             R.div [P.Style [P.Display "flex"; P.FlexWrap "wrap"; P.AlignItems "flex-start"]] [
                 R.button [P.OnClick (fun _ -> dispatch AdvancePhase)] [R.str "Next phase"]
                 R.div [P.Style [P.FlexGrow 1.]] []
@@ -266,6 +267,9 @@ let gameView gameState dispatch =
                             ]
                 ]
             ]
+        ]
+    let shotCalculatorBlock =
+        R.div [P.ClassName "block"] [
             R.div [] [
                 h2 "Shooting Calculator"
                 R.table [] [
@@ -416,13 +420,16 @@ let gameView gameState dispatch =
                             R.td [] [h3 <| sprintf "%d" finalToHit]
                         ]
                         for (description, modifier) in shotCalculatorResult.Modifiers ->
-                            R.tr [P.ClassName "shotBreakdown"] [
-                                tdStr description
-                                tdStr <| string modifier
+                            R.tr [] [
+                                R.td [P.ClassName "shotBreakdown"] [R.str description]
+                                R.td [P.ClassName "shotBreakdown"] [R.str <| string modifier]
                             ]
                     ]
                 ]
             ]
+        ]
+    let notesBlock =
+        R.div [P.ClassName "block"] [
             R.div [] [
                 h2 "Notes"
                 R.textarea [P.Style [P.Width "100%"]; P.Rows 10.] []
@@ -434,58 +441,63 @@ let gameView gameState dispatch =
         |> Seq.groupBy (fun car -> car.Speed)
         |> Seq.map (fun (speed, cars) -> (speed, List.ofSeq cars))
         |> Map.ofSeq
+    let leftBar = R.div [P.Style [P.Float "left"]] [carsBlock; shotCalculatorBlock; notesBlock]
     let rightBar =
-        R.div [P.ClassName "block"; P.Style [P.Float "left"]] [
-            h2 "Speed chart"
-            R.table [] [
-                R.colgroup [] [
-                    yield R.col []
-                    yield R.col []
-                    for i in 1..(quantum.Phase - 1) ->
-                        R.col []
-                    yield R.col [P.ClassName "currentPhase"]
-                    for i in (quantum.Phase + 1)..5 ->
-                        R.col []
-                    yield R.col []
-                ]
-                R.thead [] [
-                    R.tr [] [
-                        yield thStr "Car"
-                        yield thStr "Speed"
-                        for i in 1..5 ->
-                            thStr <| sprintf "Phase %d" i
-                        yield thStr "Ram"
+        R.div [P.Style [P.Float "left"]] [
+            R.div [P.ClassName "block"] [
+                h2 "Speed chart"
+                R.table [] [
+                    R.colgroup [] [
+                        yield R.col []
+                        yield R.col []
+                        for i in 1..(quantum.Phase - 1) ->
+                            R.col []
+                        yield R.col [P.ClassName "currentPhase"]
+                        for i in (quantum.Phase + 1)..5 ->
+                            R.col []
+                        yield R.col []
                     ]
-                ]
-                R.tbody [] [
-                    for speedRow in Data.speedChart do
-                        let cars =
-                            match Map.tryFind speedRow.Speed carsBySpeed with
-                            | None -> []
-                            | Some [] -> []
-                            | Some [car] -> [R.str car.Setup.Name]
-                            | Some (car :: cars) ->
-                                [
-                                    yield R.str car.Setup.Name
-                                    for c in cars do
-                                        yield R.br []
-                                        yield R.str c.Setup.Name
-                                ]
-                        yield R.tr [] [
-                            R.td [] cars
-                            tdStr <| sprintf "%d" speedRow.Speed
-                            tdStr speedRow.Phase1
-                            tdStr speedRow.Phase2
-                            tdStr speedRow.Phase3
-                            tdStr speedRow.Phase4
-                            tdStr speedRow.Phase5
-                            tdStr speedRow.Ram
+                    R.thead [] [
+                        R.tr [] [
+                            yield thStr "Car"
+                            yield thStr "Speed"
+                            for i in 1..5 ->
+                                thStr <| sprintf "Phase %d" i
+                            yield thStr "Ram"
                         ]
+                    ]
+                    R.tbody [] [
+                        for speedRow in Data.speedChart do
+                            let cars =
+                                match Map.tryFind speedRow.Speed carsBySpeed with
+                                | None -> []
+                                | Some [] -> []
+                                | Some [car] -> [R.str car.Setup.Name]
+                                | Some (car :: cars) ->
+                                    [
+                                        yield R.str car.Setup.Name
+                                        for c in cars do
+                                            yield R.br []
+                                            yield R.str c.Setup.Name
+                                    ]
+                            yield R.tr [] [
+                                R.td [] cars
+                                tdStr <| sprintf "%d" speedRow.Speed
+                                tdStr speedRow.Phase1
+                                tdStr speedRow.Phase2
+                                tdStr speedRow.Phase3
+                                tdStr speedRow.Phase4
+                                tdStr speedRow.Phase5
+                                tdStr speedRow.Ram
+                            ]
+                    ]
                 ]
             ]
 
-            h2 "Control Table"
-            controlTableView
+            R.div [P.ClassName "block"] [
+                h2 "Control Table"
+                controlTableView
+            ]
         ]
     R.div [] [leftBar; rightBar]
 
@@ -495,7 +507,10 @@ let view model dispatch =
         | Setup (players, error) -> setupView players dispatch error
         | ActiveGame gameState -> gameView gameState dispatch
     R.div [] [
-        R.h1 [] [R.str "Car Wars"]
-        contents
-        R.footer [P.ClassName "footer"] [R.str "Contact wipi@robo.church for questions/bug reports"]
+        R.h1 [P.ClassName "header"] [R.str "Car Wars"]
+        R.div [] [contents]
+        R.footer [P.ClassName "footer"] [
+            R.str "Questions/bugs/feature requests can be reported "
+            R.a [P.Href "https://github.com/pittsw/FableCarWars/issues"] [R.str "here"]
+        ]
     ]
