@@ -58,14 +58,16 @@ module private Helpers =
     let makeCheckboxInput title updateFunc dispatch gameState =
         R.tr [] [
             R.td [P.ColSpan 2.] [
-                R.input [
-                    P.Type "checkbox"
-                    P.OnChange (fun e ->
-                        let isChecked : bool = unbox e.nativeEvent.srcElement?``checked``
-                        updateFunc isChecked gameState.ShotCalculator
-                        |> UpdateShotCalc
-                        |> dispatch)]
-                R.str title
+                R.label [] [
+                    R.input [
+                        P.Type "checkbox"
+                        P.OnChange (fun e ->
+                            let isChecked : bool = unbox e.nativeEvent.srcElement?``checked``
+                            updateFunc isChecked gameState.ShotCalculator
+                            |> UpdateShotCalc
+                            |> dispatch)]
+                    R.str title
+                ]
             ]
         ]
 
@@ -80,16 +82,18 @@ module private Helpers =
             tdStr name
             R.td [] [
                 for value in values do
-                    yield R.input [
-                        P.Type "radio"
-                        P.Name name
-                        P.Value <| Fable.Core.Case1(value.ToString())
-                        P.OnChange (fun e ->
-                            let isSelected : bool = unbox e.nativeEvent.srcElement?``checked``
-                            updateFunc value gameState.ShotCalculator
-                            |> UpdateShotCalc
-                            |> dispatch)]
-                    yield R.str <| valueFunc value
+                    yield R.label [] [
+                        R.input [
+                            P.Type "radio"
+                            P.Name name
+                            P.Value <| Fable.Core.Case1(value.ToString())
+                            P.OnChange (fun e ->
+                                let isSelected : bool = unbox e.nativeEvent.srcElement?``checked``
+                                updateFunc value gameState.ShotCalculator
+                                |> UpdateShotCalc
+                                |> dispatch)]
+                        R.str <| valueFunc value
+                    ]
                     yield R.br []
             ]
         ]
