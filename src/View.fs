@@ -57,8 +57,7 @@ module private Helpers =
 
     let makeCheckboxInput title updateFunc dispatch gameState =
         R.tr [] [
-            tdStr title
-            R.td [] [
+            R.td [P.ColSpan 2.] [
                 R.input [
                     P.Type "checkbox"
                     P.OnChange (fun e ->
@@ -66,6 +65,7 @@ module private Helpers =
                         updateFunc isChecked gameState.ShotCalculator
                         |> UpdateShotCalc
                         |> dispatch)]
+                R.str title
             ]
         ]
 
