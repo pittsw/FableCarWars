@@ -441,9 +441,9 @@ let gameView gameState dispatch =
         |> Seq.groupBy (fun car -> car.Speed)
         |> Seq.map (fun (speed, cars) -> (speed, List.ofSeq cars))
         |> Map.ofSeq
-    let leftBar = R.div [P.Style [P.Float "left"]] [carsBlock; shotCalculatorBlock; notesBlock]
+    let leftBar = R.div [] [carsBlock; shotCalculatorBlock; notesBlock]
     let rightBar =
-        R.div [P.Style [P.Float "left"]] [
+        R.div [] [
             R.div [P.ClassName "block"] [
                 h2 "Speed Chart"
                 R.table [] [
@@ -499,7 +499,7 @@ let gameView gameState dispatch =
                 controlTableView
             ]
         ]
-    R.div [] [leftBar; rightBar]
+    R.div [P.Style [P.Display "flex"; P.FlexWrap "wrap"; P.AlignItems "flex-start"; P.JustifyContent "center"]] [leftBar; rightBar]
 
 let view model dispatch =
     let contents =
