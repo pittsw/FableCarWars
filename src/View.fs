@@ -122,6 +122,14 @@ let controlTableView =
     ]
 
 let setupView (players : SetupPlayer list) dispatch errorMsg =
+    let loadButton =
+        match GameQuantum.LoadGame() with
+        | None -> R.span [] []
+        | Some state ->
+            R.span [] [
+                R.span [P.Style [P.MarginRight "0.5em"]] [R.str "or"]
+                R.button [P.OnClick (fun _ -> dispatch LoadGame)] [R.str "Load last game"]
+            ]
     let newPlayerView =
         let newPlayerNameId = "newPlayerName"
         R.div [P.ClassName "block"; P.Style [P.Float "left"]] [
@@ -141,6 +149,7 @@ let setupView (players : SetupPlayer list) dispatch errorMsg =
                 [R.str "Add new player"]
             R.br []
             R.button [P.OnClick (fun _ -> dispatch StartGame)] [R.str "Start the game!"]
+            loadButton
             R.div [P.ClassName "error"] [R.str errorMsg]
         ]
 

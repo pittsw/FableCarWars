@@ -3,6 +3,8 @@
 module CarWars.Model
 
 open System
+open Fable.Core.JsInterop
+open Fable.Import.Browser
 
 type SetupCar = {
     Name : string
@@ -32,6 +34,14 @@ type GameQuantum = {
     Players : GamePlayer list
     Phase : int
 }
+with
+    static member LoadGame () =
+        match window.localStorage.getItem "savedGame" with
+        | null -> None
+        | x -> Some (ofJson<GameQuantum> <| string x)
+
+    static member SaveGame (quantum : GameQuantum) =
+        window.localStorage.setItem("savedGame", toJson quantum)
 
 type Arc =
     | Front
@@ -294,6 +304,7 @@ type Message =
     | AddCar of SetupCar * SetupPlayer
     | RemoveCar of SetupCar * SetupPlayer
     | StartGame
+    | LoadGame
 
     // Active game only.
     | Accelerate of GamePlayer * GameCar

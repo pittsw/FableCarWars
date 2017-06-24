@@ -60,6 +60,10 @@ let updateSetup msg (players, error) =
                 Setup (players, "There are players without cars.")
             else
                 ActiveGame <| GameState.New { Players = (players |> List.map activatePlayer); Phase = 1 }
+    | LoadGame ->
+        match GameQuantum.LoadGame() with
+        | None -> Setup (players, "Could not find saved game")
+        | Some quantum -> quantum |> GameState.New |> ActiveGame
     | _ -> failwith <| sprintf "Could not understand %A" msg
 
 let updateActive msg gameState =
@@ -120,10 +124,15 @@ let updateActive msg gameState =
         failwith <| sprintf "Could not understand %A" msg
 
 let update (msg : Message) model =
-    match (msg, model) with
-    | (Replace newState, _) -> newState
-    | (msg, Setup (players, error)) -> updateSetup msg (players, error)
-    | (msg, ActiveGame gameState) -> updateActive msg gameState
+    let newState =
+        match (msg, model) with
+        | (Replace newState, _) -> newState
+        | (msg, Setup (players, error)) -> updateSetup msg (players, error)
+        | (msg, ActiveGame gameState) -> updateActive msg gameState
+    match newState with
+    | ActiveGame gameState -> GameQuantum.SaveGame gameState.Current
+    | _ -> ()
+    newState
 
 Program.mkSimple initialModel update view
 |> Program.withConsoleTrace

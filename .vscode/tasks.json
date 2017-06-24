@@ -11,13 +11,13 @@
             "taskName": "start",
             "args": ["fable", "npm-run", "start"],
             "isBuildCommand": true,
-            "problemMatcher": "$msCompile",
+            "problemMatcher": "$fable-webpack",
             "isBackground": true
         },
         {
             "taskName": "build",
             "args": ["fable", "npm-run", "build"],
-            "problemMatcher": "$msCompile",
+            "problemMatcher": "$fable-webpack",
             "isBackground": false
         }
     ]
