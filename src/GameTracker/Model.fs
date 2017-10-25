@@ -1,10 +1,12 @@
 /// All of the types that are used in the model part of the game's model/view/update loop.
 
-module CarWars.Model
+module CarWars.GameTracker.Model
 
 open System
 open Fable.Core.JsInterop
 open Fable.Import.Browser
+
+open CarWars
 
 type SetupCar = {
     Name : string

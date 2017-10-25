@@ -1,6 +1,6 @@
 /// View functions. Since this is a client-side framework, these views return new virtual DOMs, which are then applied.
 
-module CarWars.View
+module CarWars.GameTracker.View
 
 open System
 
@@ -9,7 +9,8 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React.Props
 open Fable.Import.Browser
 
-open CarWars.Model
+open CarWars
+open CarWars.GameTracker.Model
 
 module R = Fable.Helpers.React
 module P = Fable.Helpers.React.Props

@@ -1,20 +1,10 @@
-/// The app's logic. Surprisingly short, compared to the view and model code. Maybe that's my OO background showing.
-
-module CarWars.App
+module CarWars.GameTracker.App
 
 open System
 
-open Elmish
-open Elmish.React
-open Fable.Core
-open Fable.Core.JsInterop
-open Fable.Import
-open Fable.Import.Browser
-
-open CarWars.Model
-open CarWars.View
-
-importAll "../css/base.css"
+open CarWars
+open CarWars.GameTracker.Model
+open CarWars.GameTracker.View
 
 let activatePlayer player =
     let activeCars =
@@ -33,7 +23,6 @@ let activatePlayer player =
     }
 
 let initialModel () =
-    // Setup ([{ Name = "Will"; Cars = [{ Name = "Will's Murdercycle"; HandlingClass = 3 }]; Error = "" }], "")
     Setup ([], "")
 
 let updateSetup msg (players, error) =
@@ -133,8 +122,3 @@ let update (msg : Message) model =
     | ActiveGame gameState -> GameQuantum.SaveGame gameState.Current
     | _ -> ()
     newState
-
-Program.mkSimple initialModel update view
-|> Program.withConsoleTrace
-|> Program.withReact "app"
-|> Program.run
