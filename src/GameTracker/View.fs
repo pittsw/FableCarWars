@@ -521,6 +521,6 @@ let view model dispatch =
         R.div [] [contents]
         R.footer [P.ClassName "footer"] [
             R.str "Questions/bugs/feature requests can be reported "
-            R.a [P.Href "https://github.com/pittsw/FableCarWars/issues"] [R.str "here"]
+            R.a [P.Href "https://github.com/jewelpit/FableCarWars/issues"] [R.str "here"]
         ]
     ]
